@@ -5,13 +5,20 @@ module Docker
       def execute(options={})
         opts = parse_options(options)
         puts opts
-        Docker.run_command("docker run #{opts}")
+        Docker.run_docker_command('run', opts)
       end
 
       def parse_options(o)
         raise ArgumentError.new('image is required') if !o[:image]
         s = ''
         s += "#{o[:options]} " if o[:options] 
+
+        if o[:detach]
+          s += "-d "
+        else
+          s += "--rm "
+        end
+
 
         if o[:volumes]
           raise ArgumentError.new('volumes must be an array') if !o[:volumes].is_a?(Array)
@@ -28,6 +35,16 @@ module Docker
             s += "-p #{port} "
           end
         end
+
+        if o[:env]
+          raise ArgumentError.new('env must be an array') if !o[:env].is_a?(Array)
+
+          o[:env].each do |v|
+            s += "-e #{v} "
+          end
+        end
+
+        s += "--name=#{o[:name]}" if o[:name]
 
         s += "#{o[:image]} "
         s += "#{o[:command]} " if o[:command]

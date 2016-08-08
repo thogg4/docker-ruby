@@ -2,7 +2,9 @@
 
 ## Installation
 
-docker-compose run --rm irb
+`gem 'docker-ruby', github: 'thogg4/docker-ruby'`
+
+`docker-compose run --rm irb`
 
 ## Usage
 
