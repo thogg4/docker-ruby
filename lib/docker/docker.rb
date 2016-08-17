@@ -1,5 +1,3 @@
-require 'docker/version'
-
 # commands
 require 'docker/commands/run.rb'
 

@@ -1,12 +1,14 @@
 FROM ruby:2-alpine
 
-RUN apk update && apk add git docker
+RUN apk update && apk add docker
+
+RUN mkdir /gem
+WORKDIR /gem
+COPY Gemfile /gem
+COPY docker-ruby.gemspec /gem
+
+RUN bundle install
 
 COPY . /gem
 
-WORKDIR /gem
-
-RUN gem build docker-ruby.gemspec
-RUN gem install --local docker-ruby
-
-CMD ["irb", "-I", ".", "-r", "./lib/docker/docker.rb"]
+CMD ["irb", "-I", "lib", "-r", "./lib/docker/docker.rb"]
