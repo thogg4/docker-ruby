@@ -11,4 +11,4 @@ RUN bundle install
 
 COPY . /gem
 
-CMD ["irb", "-I", "lib", "-r", "./lib/docker/docker.rb"]
+CMD ["irb", "-I", "lib", "-r", "./lib/docker.rb"]

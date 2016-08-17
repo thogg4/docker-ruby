@@ -1,5 +1,5 @@
 # commands
-require 'docker/commands/run.rb'
+require 'commands/run'
 
 module Docker
   class << self
@@ -11,9 +11,7 @@ module Docker
       c += subcommand + ' '
       c += opts
 
-      puts c
-
-      #run_command(c)
+      run_command(c)
     end
 
     def run_command(command)
